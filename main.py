@@ -16,8 +16,8 @@ st.set_page_config(
 if "GEMINI_API_KEY" in st.secrets:
     API_KEY = st.secrets["GEMINI_API_KEY"]
     genai.configure(api_key=API_KEY)
-    # Using gemini-1.5-flash for the best balance of speed and stability
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    # Using gemini-2.5-flash for the best balance of speed and stability
+    model = genai.GenerativeModel("gemini-2.5-flash")
 else:
     st.error("Missing API Key! Please add GEMINI_API_KEY to your Streamlit Secrets.")
     st.stop()
