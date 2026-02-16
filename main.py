@@ -51,7 +51,6 @@ with st.sidebar:
     if uploaded_file:
         st.success("Resume Loaded Successfully!")
 
-# --- MAIN UI ---
 jd_input = st.text_area("Paste Job Description Here:", height=250)
 
 if st.button(" Analyze Resume"):
