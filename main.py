@@ -4,12 +4,7 @@ import google.generativeai as genai
 from pypdf import PdfReader
 import docx
 import os
-
-if "GEMINI_API_KEY" in st.secrets:
-    API_KEY = st.secrets["GEMINI_API_KEY"]
-else:
-    st.error("Missing API Key! Please set GEMINI_API_KEY in Streamlit Secrets.")
-    st.stop()
+API_KEY = st.secrets["GEMINI_API_KEY"]
 
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel("gemini-2.5-flash")
