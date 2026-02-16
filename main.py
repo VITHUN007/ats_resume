@@ -93,12 +93,10 @@ jd_input = st.text_area(
 )
 
 if st.button("🚀 Analyze Resume"):
-    if not uploaded_file:
-        st.error("Please upload a resume first!")
-    elif not jd_input.strip():
-        st.warning("Please paste a Job Description.")
+    if not uploaded_file or not jd_input.strip():
+        st.error("Please provide both a resume and a job description.")
     else:
-        with st.spinner(" Comparing Resume with Job Description..."):
+        with st.spinner("Analyzing..."):
             resume_text = extract_text(uploaded_file)
 
             prompt = f"""
@@ -118,10 +116,21 @@ if st.button("🚀 Analyze Resume"):
             - Increasing Your Score (3 actionable bullet points)
             """
 
-            response = model.generate_content(prompt)
+        if len(resume_text.strip()) < 10:
+                st.error("Could not extract enough text from the resume. Is it a scanned image?")
+                st.stop()
+                
+        try:
+                # Ensure this model name is 1.5-flash
+                model = genai.GenerativeModel("gemini-1.5-flash")
+                response = model.generate_content(prompt)
+                st.markdown(response.text)
+        except Exception as e:
+                # This will print the actual error to your Streamlit UI for debugging
+                st.error(f"An error occurred: {e}")
             
-            st.markdown("---")
-            st.subheader(" Results for this JD")
-            st.markdown(response.text)
+        st.markdown("---")
+        st.subheader(" Results for this JD")
+        st.markdown(response.text)
 
 
